@@ -36,7 +36,10 @@ public class GsonSkillRepositoryImpl implements SkillsRepository {
 
     @Override
     public Skill update(Skill skill) {
-        return null;
+        List<Skill> currentSkills = getAllSkillsInternal();
+        currentSkills.set(Math.toIntExact(skill.getId()) - 1, skill);
+        writeSkillsToFile(currentSkills);
+        return skill;
     }
 
     @Override
