@@ -1,0 +1,40 @@
+[
+  {
+    "id": 1,
+    "firstName": "Tom",
+    "lastName": "Cruise",
+    "status": "ACTIVE",
+    "specialty": {
+      "id": 1,
+      "name": "Java"
+    },
+    "skills": [
+      {
+        "id": 1,
+        "name": "backend"
+      },
+      {
+        "id": 2,
+        "name": "frontend"
+      },
+      {
+        "id": 3,
+        "name": "fullstack"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "firstName": "Max",
+    "lastName": "Fun",
+    "status": "DELETED",
+    "specialty": {}
+  },
+  {
+    "id": 3,
+    "firstName": "Curre",
+    "lastName": "Furure",
+    "status": "DELETED",
+    "specialty": {}
+  }
+]
