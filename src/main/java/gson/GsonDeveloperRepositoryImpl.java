@@ -3,6 +3,7 @@ package gson;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import model.Developer;
+import model.Skill;
 import model.Specialty;
 import model.Status;
 
@@ -75,7 +76,7 @@ public class GsonDeveloperRepositoryImpl implements DeveloperRepository {
     private List<Developer> getAllDeveloperInternal() {
 
         try (Reader reader = new FileReader(DEVELOPER_PATH)) {
-            Type targetClassType = new TypeToken<ArrayList<Specialty>>() { }.getType();
+            Type targetClassType = new TypeToken<ArrayList<Developer>>() { }.getType();
             return new Gson().fromJson(reader, targetClassType);
 
         } catch (IOException e) {
@@ -91,5 +92,23 @@ public class GsonDeveloperRepositoryImpl implements DeveloperRepository {
         developer.setLastName(lastName);
         developer.setStatus(Status.ACTIVE);
         return developer;
+    }
+
+    public void addSpecialtyDeveloper(Long idDeveloper, Long spec) {
+        GsonSpecialtyRepositoryImpl gs = new GsonSpecialtyRepositoryImpl();
+        Specialty specialty = gs.getById(spec);
+
+        List<Developer> developerList = getAllDeveloperInternal();
+        developerList.get(Math.toIntExact(idDeveloper) - 1).setSpecialty(specialty);
+        writeDeveloperToFile(developerList);
+    }
+
+    public void addSkillDeveloper(Long idDeveloper) {
+        GsonSkillRepositoryImpl gs = new GsonSkillRepositoryImpl();
+        List<Skill> skills = gs.getAll();
+
+        List<Developer> developerList = getAllDeveloperInternal();
+        developerList.get(Math.toIntExact(idDeveloper) - 1).setSkills(skills);
+        writeDeveloperToFile(developerList);
     }
 }

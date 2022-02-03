@@ -2,7 +2,9 @@ package gson;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import model.Developer;
 import model.Skill;
+import model.Specialty;
 
 import java.io.*;
 import java.lang.reflect.Type;
