@@ -1,6 +1,7 @@
 package model;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Developer {
 
@@ -10,6 +11,18 @@ public class Developer {
     private Status status;
     private Specialty specialty;
     private List<Skill> skills;
+
+    public Developer(Long id, String firstName, String lastName, Status status, Specialty specialty, List<Skill> skills) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.status = status;
+        this.specialty = specialty;
+        this.skills = skills;
+    }
+
+    public Developer() {
+    }
 
     public Long getId() {
         return id;
@@ -57,5 +70,30 @@ public class Developer {
 
     public void setSkills(List<Skill> skills) {
         this.skills = skills;
+    }
+
+    @Override
+    public String toString() {
+        return "Developer{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", status=" + status +
+                ", specialty=" + specialty +
+                ", skills=" + skills +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Developer)) return false;
+        Developer developer = (Developer) o;
+        return Objects.equals(getId(), developer.getId()) && Objects.equals(getFirstName(), developer.getFirstName()) && Objects.equals(getLastName(), developer.getLastName()) && getStatus() == developer.getStatus() && Objects.equals(getSpecialty(), developer.getSpecialty()) && Objects.equals(getSkills(), developer.getSkills());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getFirstName(), getLastName(), getStatus(), getSpecialty(), getSkills());
     }
 }
