@@ -15,7 +15,7 @@ public class Main {
         System.out.println(sr.getAll());
         System.out.println("Установить специальность дев-ру: ");
 
-
+        dv.deleteSpecialtyByDeveloper(2L);
 
         System.out.println("Проверить установленную специальность у дев-ра");
         System.out.println(dv.getAll());

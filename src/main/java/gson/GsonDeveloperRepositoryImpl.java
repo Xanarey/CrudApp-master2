@@ -111,4 +111,16 @@ public class GsonDeveloperRepositoryImpl implements DeveloperRepository {
         developerList.get(Math.toIntExact(idDeveloper) - 1).setSkills(skills);
         writeDeveloperToFile(developerList);
     }
+
+    public void deleteByStatus(Long idDeveloper) {
+        List<Developer> developerList = getAllDeveloperInternal();
+        developerList.get(Math.toIntExact(idDeveloper) - 1).setStatus(Status.DELETED);
+        writeDeveloperToFile(developerList);
+    }
+
+    public void deleteSpecialtyByDeveloper(Long idDeveloper) {
+        List<Developer> developerList = getAllDeveloperInternal();
+        developerList.get(Math.toIntExact(idDeveloper) - 1).setSpecialty(new Specialty());
+        writeDeveloperToFile(developerList);
+    }
 }
