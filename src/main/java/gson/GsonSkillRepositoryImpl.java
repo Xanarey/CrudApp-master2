@@ -73,7 +73,7 @@ public class GsonSkillRepositoryImpl implements SkillsRepository {
         } catch (IOException e) {
             System.out.println("Error: " + e);
         }
-        return null;
+        return new ArrayList<>();
     }
 
     public Skill addSkill(String name) {

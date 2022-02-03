@@ -21,22 +21,3 @@ public class Main {
 
     }
 }
-
-
-
-
-
-
-
-
-
-//[
-//        {
-//        "id": 1,
-//        "name": "backend"
-//        },
-//        {
-//        "id": 2,
-//        "name": "frontend"
-//        }
-//        ]

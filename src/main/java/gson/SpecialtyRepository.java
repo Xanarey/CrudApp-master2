@@ -1,3 +1,5 @@
+package gson;
+
 import gson.GenericRepository;
 import model.Specialty;
 
