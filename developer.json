@@ -36,5 +36,11 @@
     "lastName": "Furure",
     "status": "DELETED",
     "specialty": {}
+  },
+  {
+    "id": 4,
+    "firstName": "Timur",
+    "lastName": "Bro",
+    "status": "ACTIVE"
   }
 ]
