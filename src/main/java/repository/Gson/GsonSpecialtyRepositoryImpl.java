@@ -1,8 +1,9 @@
-package gson;
+package repository.Gson;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import model.Specialty;
+import repository.SpecialtyRepository;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -15,7 +16,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
-public class GsonSpecialtyRepositoryImpl implements SpecialtyRepository{
+public class GsonSpecialtyRepositoryImpl implements SpecialtyRepository {
 
     private static final String SPECIALTY_PATH = "specialty.json";
 

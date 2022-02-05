@@ -1,6 +1,6 @@
-package gson;
+package repository;
 
-import gson.GenericRepository;
+import repository.GenericRepository;
 import model.Developer;
 
 public interface DeveloperRepository extends GenericRepository<Developer, Long> {

@@ -1,4 +1,4 @@
-package gson;
+package repository.Gson;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -6,6 +6,7 @@ import model.Developer;
 import model.Skill;
 import model.Specialty;
 import model.Status;
+import repository.DeveloperRepository;
 
 import java.io.FileReader;
 import java.io.IOException;
