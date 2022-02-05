@@ -83,4 +83,12 @@ public class GsonSkillRepositoryImpl implements SkillsRepository {
         return skill;
     }
 
+    public void deleteAllSkills() {
+        writeSkillsToFile(deleteAll());
+    }
+
+    private List<Skill> deleteAll() {
+        return new ArrayList<>();
+    }
+
 }

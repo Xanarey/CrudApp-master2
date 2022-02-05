@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -22,6 +23,7 @@ public class Developer {
     }
 
     public Developer() {
+        skills = new ArrayList<>();
     }
 
     public Long getId() {

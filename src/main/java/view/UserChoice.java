@@ -4,6 +4,7 @@ import controller.DeveloperController;
 import controller.SkillsController;
 import controller.SpecialtyController;
 
+import java.io.IOException;
 import java.net.IDN;
 import java.util.Objects;
 import java.util.Scanner;
@@ -174,19 +175,61 @@ public class UserChoice {
 
 
                     if (CHOICE_SUB_MENU == 11) {
+                        System.out.println(skillsController.getAllSkills());
 
                     }
                     if (CHOICE_SUB_MENU == 12) {
-
+                        System.out.println("Введите название нового скилла: ");
+                        do {
+                            SKILL_NAME = scanner.nextLine();
+                        } while (Objects.equals(SKILL_NAME, ""));
+                        skillsController.addSkillList(SKILL_NAME);
+                        System.out.println("Скилл: " + SKILL_NAME + " успешно добавлен");
                     }
+
+
                     if (CHOICE_SUB_MENU == 13) {
+                        System.out.println(skillsController.getAllSkills());
+                        System.out.println("Введите id скилла для удаления");
+                        do {
+                            ID = scanner.nextLong();
+                            skillsController.deleteSkill(ID);
+                            break;
+                        } while (ID != 0);
+                        System.out.println("Скилл успешно удалён");
+                    }
+                    if (CHOICE_SUB_MENU == 14) {
+                        skillsController.deleteAllSkills();
+                        System.out.println("Все скиллы удалены");
+                    }
+                    if (CHOICE_SUB_MENU == 15) {
+                        developerController.getAllDeveloper();
+                        System.out.println("Введите id разработчика: ");
+                        do {
+
+                                ID = scanner.nextLong();
+                                System.out.println("Выберите скилл по id");
+                                System.out.println(skillsController.getAllSkills());
+                                ID_SKILL = scanner.nextLong();
+                                skillsController.addSkillDeveloper(ID, ID_SKILL);
+                                break;
+
+                        } while (ID != 0);
+                        System.out.println("Скилл успешно добавлен");
+
+
+
+                        // TODO ОБРАБОТАТЬ ДУБЛИРОВАНИЕ СКИЛЛОВ В МАССИВЕ ОБЪЕКТОВ
+                    }
+                    if (CHOICE_SUB_MENU == 16) {
 
                     }
+                    if (CHOICE_SUB_MENU == 17) {
 
+                    }
+                    if (CHOICE_SUB_MENU == 18) {
 
-
-
-
+                    }
 
 
 
@@ -239,9 +282,11 @@ public class UserChoice {
 
     public static Long ID ;
     public static Long ID_SPEC;
+    public static Long ID_SKILL;
     public static Long CHOICE_MENU;
     public static Long CHOICE_SUB_MENU;
     public static String FIRST_NAME;
     public static String LAST_NAME;
     public static String NAME_SPEC;
+    public static String SKILL_NAME;
 }
