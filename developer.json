@@ -3,7 +3,7 @@
     "id": 1,
     "firstName": "Tom",
     "lastName": "Cruise",
-    "status": "ACTIVE",
+    "status": "DELETED",
     "specialty": {
       "id": 1,
       "name": "Java"
@@ -42,5 +42,16 @@
     "firstName": "Timur",
     "lastName": "Bro",
     "status": "ACTIVE"
+  },
+  {
+    "id": 5,
+    "firstName": "Dwan",
+    "status": "ACTIVE"
+  },
+  {
+    "id": 6,
+    "firstName": "Poper",
+    "lastName": "Cruger",
+    "status": "DELETED"
   }
 ]
