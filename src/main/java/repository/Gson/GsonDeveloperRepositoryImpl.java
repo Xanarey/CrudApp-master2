@@ -1,6 +1,7 @@
 package repository.Gson;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import model.Developer;
 import model.Skill;
@@ -78,6 +79,7 @@ public class GsonDeveloperRepositoryImpl implements DeveloperRepository {
 
         try (Reader reader = new FileReader(DEVELOPER_PATH)) {
             Type targetClassType = new TypeToken<ArrayList<Developer>>() { }.getType();
+
             return new Gson().fromJson(reader, targetClassType);
 
         } catch (IOException e) {
