@@ -4,8 +4,6 @@ import controller.DeveloperController;
 import controller.SkillsController;
 import controller.SpecialtyController;
 
-import java.io.IOException;
-import java.net.IDN;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -161,19 +159,7 @@ public class UserChoice {
                                     System.out.println("Разработчика по указанному ID не существует" + e);
                                 }
                         } while (ID != 0);
-
                     }
-
-
-
-
-
-
-
-
-
-
-
                     if (CHOICE_SUB_MENU == 11) {
                         System.out.println(skillsController.getAllSkills());
 
@@ -186,8 +172,6 @@ public class UserChoice {
                         skillsController.addSkillList(SKILL_NAME);
                         System.out.println("Скилл: " + SKILL_NAME + " успешно добавлен");
                     }
-
-
                     if (CHOICE_SUB_MENU == 13) {
                         System.out.println(skillsController.getAllSkills());
                         System.out.println("Введите id скилла для удаления");
@@ -206,41 +190,34 @@ public class UserChoice {
                         developerController.getAllDeveloper();
                         System.out.println("Введите id разработчика: ");
                         do {
-
                                 ID = scanner.nextLong();
                                 System.out.println("Выберите скилл по id");
                                 System.out.println(skillsController.getAllSkills());
                                 ID_SKILL = scanner.nextLong();
                                 skillsController.addSkillDeveloper(ID, ID_SKILL);
                                 break;
-
                         } while (ID != 0);
-                        System.out.println("Скилл успешно добавлен");
-
-
-
-                        // TODO ОБРАБОТАТЬ ДУБЛИРОВАНИЕ СКИЛЛОВ В МАССИВЕ ОБЪЕКТОВ
                     }
                     if (CHOICE_SUB_MENU == 16) {
-
+                        developerController.getAllDeveloper();
+                        System.out.println("Введите id разработчика для удаления скилла: ");
+                        do {
+                            try {
+                                ID = scanner.nextLong();
+                                System.out.println(skillsController.getAllSkillDeveloper(ID));
+                                System.out.println("Введите id скилла для удаления: ");
+                                id_skill = scanner.nextInt();
+                                skillsController.deleteSkillDeveloper(ID, id_skill);
+                                System.out.println("Скилл удален");
+                                break;
+                            } catch (NullPointerException e) {
+                                System.out.println("Разработчика по указанному ID не существует" + e);
+                            }
+                        } while (ID != 0);
                     }
-                    if (CHOICE_SUB_MENU == 17) {
-
-                    }
-                    if (CHOICE_SUB_MENU == 18) {
-
-                    }
-
-
-
-
                 } while (CHOICE_SUB_MENU != 1);
             }
-
-
         } while (CHOICE_MENU != 1);
-
-
     }
 
     public static String SUB_MENU = """
@@ -264,10 +241,7 @@ public class UserChoice {
             14. Удалить все скиллы из списка
             
             15. Добавить скилл разработчику
-            16. Редактировать скиллы у разработчика
-            17. Удалить скилл у разработчика
-            18. Удалить все скиллы у разработчика
-
+            16. Удалить скилл у разработчика
             """;
 
     public static String MENU = """
@@ -283,6 +257,7 @@ public class UserChoice {
     public static Long ID ;
     public static Long ID_SPEC;
     public static Long ID_SKILL;
+    public static Integer id_skill;
     public static Long CHOICE_MENU;
     public static Long CHOICE_SUB_MENU;
     public static String FIRST_NAME;

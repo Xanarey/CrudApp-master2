@@ -30,17 +30,17 @@
     "status": "ACTIVE",
     "skills": [
       {
+        "id": 1,
+        "name": "backend"
+      },
+      {
+        "id": 2,
+        "name": "frontend"
+      },
+      {
         "id": 3,
         "name": "fullstack"
       }
     ]
-  },
-  {
-    "id": 3,
-    "firstName": "Тимур",
-    "lastName": "Брек",
-    "status": "ACTIVE",
-    "specialty": {},
-    "skills": []
   }
 ]
