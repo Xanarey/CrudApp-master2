@@ -52,7 +52,7 @@ public class GsonSkillRepositoryImpl implements SkillsRepository {
 
     private Long generateMaxId(List<Skill> skills) {
         Skill skillWithMaxId = skills.stream().max(Comparator.comparing(Skill::getId)).orElse(null);
-        return Objects.nonNull(skillWithMaxId) ? skillWithMaxId.getId() + 1 : 0L;
+        return Objects.nonNull(skillWithMaxId) ? skillWithMaxId.getId() + 1 : 1L;
     }
 
     private void writeSkillsToFile(List<Skill> skills) {
@@ -74,20 +74,6 @@ public class GsonSkillRepositoryImpl implements SkillsRepository {
         } catch (IOException e) {
             System.out.println("Error: " + e);
         }
-        return new ArrayList<>();
-    }
-
-    public Skill addSkill(String name) {
-        Skill skill = new Skill();
-        skill.setName(name);
-        return skill;
-    }
-
-    public void deleteAllSkills() {
-        writeSkillsToFile(deleteAll());
-    }
-
-    private List<Skill> deleteAll() {
         return new ArrayList<>();
     }
 

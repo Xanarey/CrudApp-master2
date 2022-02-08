@@ -3,6 +3,10 @@ package view;
 import controller.DeveloperController;
 import controller.SkillsController;
 import controller.SpecialtyController;
+import model.Developer;
+import model.Skill;
+import model.Status;
+import repository.Gson.GsonDeveloperRepositoryImpl;
 
 import java.util.Objects;
 import java.util.Scanner;
@@ -21,7 +25,7 @@ public class UserChoice {
             CHOICE_MENU = scanner.nextLong();
 
             if (CHOICE_MENU == 2) {
-                developerController.getAllDeveloper();
+                System.out.println(developerController.getAll());
             }
             if (CHOICE_MENU == 3) {
                 System.out.println("Введите имя:");
@@ -32,17 +36,17 @@ public class UserChoice {
                 do {
                     LAST_NAME = scanner.nextLine();
                 } while (Objects.equals(LAST_NAME, ""));
-                developerController.addDeveloper(FIRST_NAME, LAST_NAME);
+                developerController.save(new Developer(FIRST_NAME, LAST_NAME));
                 System.out.println("Разработчик: [" + FIRST_NAME + " " + LAST_NAME + "] успешно добавлен");
             }
             if (CHOICE_MENU == 4) {
-                developerController.getAllDeveloper();
+                developerController.getAll();
                 System.out.println("Введите id для удаления записи:");
                 do {
                     ID = scanner.nextLong();
                 } while (ID == 0);
                 try {
-                    developerController.deleteDeveloper(ID);
+                    developerController.deleteById(ID);
                 } catch (NullPointerException e) {
                     System.out.println("Разработчика по указанному ID не существует" + e);
                 }
@@ -53,10 +57,10 @@ public class UserChoice {
                     CHOICE_SUB_MENU = scanner.nextLong();
 
                     if (CHOICE_SUB_MENU == 2) {
-                        developerController.getAllDeveloper();
+                        developerController.getAll();
                     }
                     if (CHOICE_SUB_MENU == 3) {
-                        developerController.getAllDeveloper();
+                        developerController.getAll();
                         System.out.println("Введите id для редактирования: ");
                         do {
                             ID_SPEC = scanner.nextLong();
@@ -70,25 +74,29 @@ public class UserChoice {
                             do {
                                 LAST_NAME = scanner.nextLine();
                             } while (Objects.equals(LAST_NAME, ""));
-                            developerController.editDeveloper(ID_SPEC, FIRST_NAME, LAST_NAME);
+                            Developer developer = new Developer(FIRST_NAME, LAST_NAME);
+                            developer.setId(ID_SPEC);
+                            developerController.update(developer);
                         } catch (NullPointerException e) {
                             System.out.println("Разработчика по указанному ID не существует" + e);
                         }
                     }
                     if (CHOICE_SUB_MENU == 4) {
-                        developerController.getAllDeveloper();
+                        System.out.println(developerController.getAll());
                         System.out.println("Введите id для изменения статуса ACTIVE на статус DELETED");
                         do {
                             ID = scanner.nextLong();
                             try {
-                                developerController.deleteStatus(ID);
+                                Developer developer = developerController.getById(ID);
+                                developer.setStatus(Status.DELETED);
+                                developerController.update(developer);
                             } catch (NullPointerException e) {
                                 System.out.println("Разработчика по указанному ID не существует" + e);
                             }
                         } while (ID == 0);
                     }
                     if (CHOICE_SUB_MENU == 5) {
-                        System.out.println(specialtyController.getAllSpecialty());
+                        System.out.println(specialtyController.getAll());
                     }
                     if (CHOICE_SUB_MENU == 6) {
                         System.out.println("Введите название новой специальности: ");
@@ -99,28 +107,28 @@ public class UserChoice {
                         System.out.println("Специальность : " + NAME_SPEC + " успешно добавлена");
                     }
                     if (CHOICE_SUB_MENU == 7) {
-                        System.out.println(specialtyController.getAllSpecialty());
+                        System.out.println(specialtyController.getAll());
                         System.out.println("Введите id специальности:   (0 - для выхода)");
                         do {
                             try {
                                 ID_SPEC = scanner.nextLong();
-                                System.out.println("Специальность : " + specialtyController.getByIDSpec(ID_SPEC) + " успешно удалена");
-                                specialtyController.deleteSpecialtyOnList(ID_SPEC);
+                                System.out.println("Специальность : " + specialtyController.getById(ID_SPEC) + " успешно удалена");
+//                                specialtyController.deleteSpecialtyOnList(ID_SPEC);
                             } catch (NullPointerException e) {
                                 System.out.println("Специальности по такому id не существует");
                             }
                         } while (ID_SPEC != 0);
                     }
                     if (CHOICE_SUB_MENU == 8) {
-                        developerController.getAllDeveloper();
+                        developerController.getAll();
                         System.out.println("Введите id разработчика для добавления специальности: ");
                         do {
                             try {
                                 ID = scanner.nextLong();
-                                System.out.println(specialtyController.getAllSpecialty());
+                                System.out.println(specialtyController.getAll());
                                 System.out.println("Введите id специальности: ");
                                 ID_SPEC = scanner.nextLong();
-                                developerController.addSpecialtyForDeveloper(ID, ID_SPEC);
+//                                developerController.addSpecialtyForDeveloper(ID, ID_SPEC);
                                 System.out.println("Специальность установлена");
                                 break;
                             } catch (NullPointerException e) {
@@ -129,15 +137,15 @@ public class UserChoice {
                         } while (ID != 0);
                     }
                     if (CHOICE_SUB_MENU == 9) {
-                        developerController.getAllDeveloper();
+                        developerController.getAll();
                         System.out.println("Введите id разработчика для редактирования специальности: ");
                         do {
                             try {
                                 ID = scanner.nextLong();
-                                System.out.println(specialtyController.getAllSpecialty());
+                                System.out.println(specialtyController.getAll());
                                 System.out.println("Введите id новой специальности: ");
                                 ID_SPEC = scanner.nextLong();
-                                developerController.editSpecialDev(ID, ID_SPEC);
+//                                developerController.editSpecialDev(ID, ID_SPEC);
                                 System.out.println("Специальность успешно изменена ");
                                 break;
                             } catch (NullPointerException e) {
@@ -146,13 +154,13 @@ public class UserChoice {
                         } while (ID != 0);
                     }
                     if (CHOICE_SUB_MENU == 10) {
-                        developerController.getAllDeveloper();
+                        developerController.getAll();
                         System.out.println("Введите id разработчика для удаления специальности: ");
                         do {
                             try {
                                 ID = scanner.nextLong();
-                                System.out.println(specialtyController.getAllSpecialty());
-                                developerController.deleteSpecialtyDev(ID);
+                                System.out.println(specialtyController.getAll());
+//                                developerController.deleteSpecialtyDev(ID);
                                 System.out.println("Специальность успешно удалена ");
                                 break;
                             } catch (NullPointerException e) {
@@ -161,7 +169,7 @@ public class UserChoice {
                         } while (ID != 0);
                     }
                     if (CHOICE_SUB_MENU == 11) {
-                        System.out.println(skillsController.getAllSkills());
+                        System.out.println(skillsController.getAll());
 
                     }
                     if (CHOICE_SUB_MENU == 12) {
@@ -169,45 +177,45 @@ public class UserChoice {
                         do {
                             SKILL_NAME = scanner.nextLine();
                         } while (Objects.equals(SKILL_NAME, ""));
-                        skillsController.addSkillList(SKILL_NAME);
+//                        skillsController.addSkillList(SKILL_NAME);
                         System.out.println("Скилл: " + SKILL_NAME + " успешно добавлен");
                     }
                     if (CHOICE_SUB_MENU == 13) {
-                        System.out.println(skillsController.getAllSkills());
+                        System.out.println(skillsController.getAll());
                         System.out.println("Введите id скилла для удаления");
                         do {
                             ID = scanner.nextLong();
-                            skillsController.deleteSkill(ID);
+//                            skillsController.deleteSkill(ID);
                             break;
                         } while (ID != 0);
                         System.out.println("Скилл успешно удалён");
                     }
                     if (CHOICE_SUB_MENU == 14) {
-                        skillsController.deleteAllSkills();
+//                        skillsController.deleteAllSkills();
                         System.out.println("Все скиллы удалены");
                     }
                     if (CHOICE_SUB_MENU == 15) {
-                        developerController.getAllDeveloper();
+                        developerController.getAll();
                         System.out.println("Введите id разработчика: ");
                         do {
                                 ID = scanner.nextLong();
-                                System.out.println("Выберите скилл по id");
-                                System.out.println(skillsController.getAllSkills());
-                                ID_SKILL = scanner.nextLong();
-                                skillsController.addSkillDeveloper(ID, ID_SKILL);
+                                System.out.println("Выберите название скилла");
+                                System.out.println(skillsController.getAll());
+                                ID_SKILL = scanner.nextLine();
+                                skillsController.update(new Skill(ID_SKILL));
                                 break;
                         } while (ID != 0);
                     }
                     if (CHOICE_SUB_MENU == 16) {
-                        developerController.getAllDeveloper();
+                        developerController.getAll();
                         System.out.println("Введите id разработчика для удаления скилла: ");
                         do {
                             try {
                                 ID = scanner.nextLong();
-                                System.out.println(skillsController.getAllSkillDeveloper(ID));
+//                                System.out.println(skillsController.getAllSkillDeveloper(ID));
                                 System.out.println("Введите id скилла для удаления: ");
                                 id_skill = scanner.nextInt();
-                                skillsController.deleteSkillDeveloper(ID, id_skill);
+//                                skillsController.deleteSkillDeveloper(ID, id_skill);
                                 System.out.println("Скилл удален");
                                 break;
                             } catch (NullPointerException e) {
@@ -256,10 +264,10 @@ public class UserChoice {
 
     public static Long ID ;
     public static Long ID_SPEC;
-    public static Long ID_SKILL;
     public static Integer id_skill;
     public static Long CHOICE_MENU;
     public static Long CHOICE_SUB_MENU;
+    public static String ID_SKILL;
     public static String FIRST_NAME;
     public static String LAST_NAME;
     public static String NAME_SPEC;

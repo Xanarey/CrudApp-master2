@@ -13,16 +13,11 @@ public class Developer {
     private Specialty specialty;
     private List<Skill> skills;
 
-    public Developer(Long id, String firstName, String lastName, Status status, Specialty specialty, List<Skill> skills) {
-        this.id = id;
+    public Developer(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.status = status;
-        this.specialty = specialty;
-        this.skills = skills;
-    }
-
-    public Developer() {
+        status = Status.ACTIVE;
+        specialty = new Specialty();
         skills = new ArrayList<>();
     }
 

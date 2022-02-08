@@ -1,51 +1,46 @@
 package controller;
 
 import model.Developer;
-import model.Specialty;
 import repository.Gson.GsonDeveloperRepositoryImpl;
-import repository.Gson.GsonSpecialtyRepositoryImpl;
 
-public class DeveloperController {
+import java.util.List;
 
-    GsonDeveloperRepositoryImpl gdri = new GsonDeveloperRepositoryImpl();
-    GsonSpecialtyRepositoryImpl gsri = new GsonSpecialtyRepositoryImpl();
+public class DeveloperController extends GsonDeveloperRepositoryImpl {
 
-    public void addDeveloper(String firstName, String lastName) {
-        gdri.save(gdri.addDeveloper(firstName, lastName));
+    @Override
+    public Developer getById(Long aLong) {
+        return super.getById(aLong);
     }
 
-    public void getAllDeveloper() {
-        System.out.println(gdri.getAll());
+    @Override
+    public List<Developer> getAll() {
+        return super.getAll();
     }
 
-    public void editDeveloper(Long id, String firstName, String lastName) {
-        Developer developer = gdri.getById(id);
-        developer.setFirstName(firstName);
-        developer.setLastName(lastName);
-        gdri.update(developer);
+    @Override
+    public Developer save(Developer developer) {
+        return super.save(addDeveloper(developer));
     }
 
-    public void deleteDeveloper(Long id) {
-        gdri.deleteById(id);
+    @Override
+    public Developer update(Developer developer) {
+        return super.update(editDeveloper(developer));
     }
 
-    public void deleteStatus(Long id) {
-        gdri.deleteByStatus(id);
+    @Override
+    public void deleteById(Long aLong) {
+        super.deleteById(aLong);
     }
 
-    public void addSpecialtyForDeveloper(Long idDev, Long idSpec) {
-        gdri.addSpecialtyDeveloper(idDev, idSpec);
+    private Developer addDeveloper(Developer developer) {
+        return new Developer(developer.getFirstName(), developer.getLastName());
     }
 
-    public Developer editSpecialDev(Long id, Long idNewSpec) {
-        Developer developer = gdri.getById(id);
-        Specialty specialty = gsri.getById(idNewSpec);
-        developer.setSpecialty(specialty);
-        gdri.update(developer);
-        return developer;
+    private Developer editDeveloper(Developer developer) {
+        Developer developerTarget = getById(developer.getId());
+        developerTarget.setFirstName(developer.getFirstName());
+        developerTarget.setLastName(developer.getLastName());
+        return developerTarget;
     }
 
-    public void deleteSpecialtyDev(Long id) {
-        gdri.deleteSpecialtyByDeveloper(id);
-    }
 }

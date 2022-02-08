@@ -5,26 +5,30 @@ import repository.Gson.GsonSpecialtyRepositoryImpl;
 
 import java.util.List;
 
-public class SpecialtyController {
+public class SpecialtyController extends GsonSpecialtyRepositoryImpl {
 
-    GsonSpecialtyRepositoryImpl gsri = new GsonSpecialtyRepositoryImpl();
-
-    public List<Specialty> getAllSpecialty() {
-        return gsri.getAll();
+    @Override
+    public Specialty getById(Long aLong) {
+        return super.getById(aLong);
     }
 
-    public void addSpecialty(String nameSpec) {
-        gsri.save(gsri.addSpecialty(nameSpec));
-
+    @Override
+    public List<Specialty> getAll() {
+        return super.getAll();
     }
 
-    public void deleteSpecialtyOnList(Long id) {
-        gsri.deleteById(id);
+    @Override
+    public Specialty save(Specialty specialty) {
+        return super.save(specialty);
     }
 
-    public String getByIDSpec(Long id) {
-        return gsri.getById(id).getName();
+    @Override
+    public Specialty update(Specialty specialty) {
+        return super.update(specialty);
     }
 
-
+    @Override
+    public void deleteById(Long aLong) {
+        super.deleteById(aLong);
+    }
 }

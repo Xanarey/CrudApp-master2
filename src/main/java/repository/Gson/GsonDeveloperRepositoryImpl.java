@@ -3,8 +3,6 @@ package repository.Gson;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import model.Developer;
-import model.Specialty;
-import model.Status;
 import repository.DeveloperRepository;
 
 import java.io.FileReader;
@@ -21,7 +19,6 @@ import java.util.Objects;
 public class GsonDeveloperRepositoryImpl implements DeveloperRepository {
 
     private static final String DEVELOPER_PATH = "developer.json";
-
 
     @Override
     public Developer getById(Long aLong) {
@@ -46,7 +43,7 @@ public class GsonDeveloperRepositoryImpl implements DeveloperRepository {
     @Override
     public Developer update(Developer developer) {
         List<Developer> currentDeveloper = getAllDeveloperInternal();
-        currentDeveloper.set(Math.toIntExact(developer.getId()), developer);
+        currentDeveloper.set(currentDeveloper.indexOf(getById(developer.getId())), developer);
         writeDeveloperToFile(currentDeveloper);
         return developer;
     }
@@ -54,13 +51,14 @@ public class GsonDeveloperRepositoryImpl implements DeveloperRepository {
     @Override
     public void deleteById(Long aLong) {
         List<Developer> currentDeveloper = getAllDeveloperInternal();
-        currentDeveloper.remove(getById(aLong));
+        Developer developer = getById(aLong);
+        currentDeveloper.remove(currentDeveloper.indexOf(getById(developer.getId())));
         writeDeveloperToFile(currentDeveloper);
     }
 
     private Long generateMaxId(List<Developer> developers) {
         Developer developerWithMaxId = developers.stream().max(Comparator.comparing(Developer::getId)).orElse(null);
-        return Objects.nonNull(developerWithMaxId) ? developerWithMaxId.getId() + 1 : 0L;
+        return Objects.nonNull(developerWithMaxId) ? developerWithMaxId.getId() + 1 : 1L;
     }
 
     private void writeDeveloperToFile(List<Developer> developers) {
@@ -85,34 +83,5 @@ public class GsonDeveloperRepositoryImpl implements DeveloperRepository {
         }
 
         return new ArrayList<>();
-    }
-
-    public Developer addDeveloper(String firstName, String lastName) {
-        Developer developer = new Developer();
-        developer.setFirstName(firstName);
-        developer.setLastName(lastName);
-        developer.setStatus(Status.ACTIVE);
-        return developer;
-    }
-
-    public void addSpecialtyDeveloper(Long idDeveloper, Long spec) {
-        GsonSpecialtyRepositoryImpl gs = new GsonSpecialtyRepositoryImpl();
-        Specialty specialty = gs.getById(spec);
-
-        List<Developer> developerList = getAllDeveloperInternal();
-        developerList.get(Math.toIntExact(idDeveloper)).setSpecialty(specialty);
-        writeDeveloperToFile(developerList);
-    }
-
-    public void deleteByStatus(Long idDeveloper) {
-        List<Developer> developerList = getAllDeveloperInternal();
-        developerList.get(Math.toIntExact(idDeveloper)).setStatus(Status.DELETED);
-        writeDeveloperToFile(developerList);
-    }
-
-    public void deleteSpecialtyByDeveloper(Long idDeveloper) {
-        List<Developer> developerList = getAllDeveloperInternal();
-        developerList.get(Math.toIntExact(idDeveloper)).setSpecialty(new Specialty());
-        writeDeveloperToFile(developerList);
     }
 }

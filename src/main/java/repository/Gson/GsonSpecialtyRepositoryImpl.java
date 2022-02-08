@@ -58,7 +58,7 @@ public class GsonSpecialtyRepositoryImpl implements SpecialtyRepository {
 
     private Long generateMaxId(List<Specialty> specialties) {
         Specialty specialtyWithMaxId = specialties.stream().max(Comparator.comparing(Specialty::getId)).orElse(null);
-        return Objects.nonNull(specialtyWithMaxId) ? specialtyWithMaxId.getId() + 1 : 0L;
+        return Objects.nonNull(specialtyWithMaxId) ? specialtyWithMaxId.getId() + 1 : 1L;
     }
 
     private void writeSpecialtyToFile(List<Specialty> specialties) {
