@@ -23,7 +23,7 @@ public class SpecialtyController {
     }
 
     public String getByIDSpec(Long id) {
-        return gsri.getById(id + 1L).getName();
+        return gsri.getById(id).getName();
     }
 
 

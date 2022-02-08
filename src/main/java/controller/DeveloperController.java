@@ -37,10 +37,6 @@ public class DeveloperController {
         gdri.addSpecialtyDeveloper(idDev, idSpec);
     }
 
-    public String getByIdDev(Long id) {
-        return gdri.getById(id + 1L).getSpecialty().getName();
-    }
-
     public Developer editSpecialDev(Long id, Long idNewSpec) {
         Developer developer = gdri.getById(id);
         Specialty specialty = gsri.getById(idNewSpec);

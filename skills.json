@@ -1,14 +1,14 @@
 [
   {
-    "id": 1,
+    "id": 0,
     "name": "backend"
   },
   {
-    "id": 2,
+    "id": 1,
     "name": "frontend"
   },
   {
-    "id": 3,
+    "id": 2,
     "name": "fullstack"
   }
 ]

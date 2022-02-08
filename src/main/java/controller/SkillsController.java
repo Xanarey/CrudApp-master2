@@ -5,7 +5,6 @@ import model.Skill;
 import repository.Gson.GsonDeveloperRepositoryImpl;
 import repository.Gson.GsonSkillRepositoryImpl;
 
-import java.text.Collator;
 import java.util.*;
 
 public class SkillsController {
@@ -53,12 +52,12 @@ public class SkillsController {
     }
 
     public List<Skill> getAllSkillDeveloper(Long id) {
-        return gdri.getAll().get(Math.toIntExact(id) - 1).getSkills();
+        return gdri.getAll().get(Math.toIntExact(id)).getSkills();
     }
 
     public void deleteSkillDeveloper(Long idDev, int idSkill) {
         Developer developer = gdri.getById(idDev);
-        developer.getSkills().remove(idSkill - 1);
+        developer.getSkills().remove(idSkill);
         gdri.update(developer);
     }
 

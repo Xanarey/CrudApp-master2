@@ -44,7 +44,7 @@ public class GsonSpecialtyRepositoryImpl implements SpecialtyRepository {
     @Override
     public Specialty update(Specialty specialty) {
         List<Specialty> currentSpecialty = getAllSpecialtyInternal();
-        currentSpecialty.set(Math.toIntExact(specialty.getId()) - 1, specialty);
+        currentSpecialty.set(Math.toIntExact(specialty.getId()), specialty);
         writeSpecialtyToFile(currentSpecialty);
         return specialty;
     }
@@ -58,7 +58,7 @@ public class GsonSpecialtyRepositoryImpl implements SpecialtyRepository {
 
     private Long generateMaxId(List<Specialty> specialties) {
         Specialty specialtyWithMaxId = specialties.stream().max(Comparator.comparing(Specialty::getId)).orElse(null);
-        return Objects.nonNull(specialtyWithMaxId) ? specialtyWithMaxId.getId() + 1 : 1L;
+        return Objects.nonNull(specialtyWithMaxId) ? specialtyWithMaxId.getId() + 1 : 0L;
     }
 
     private void writeSpecialtyToFile(List<Specialty> specialties) {
@@ -67,7 +67,7 @@ public class GsonSpecialtyRepositoryImpl implements SpecialtyRepository {
             Files.write(Paths.get(SPECIALTY_PATH), jsonString.getBytes());
 
         } catch (IOException e) {
-            System.out.println(e);
+            System.out.println("Error" + e);
         }
     }
 

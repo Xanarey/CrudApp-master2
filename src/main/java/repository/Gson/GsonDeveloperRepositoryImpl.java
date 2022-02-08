@@ -1,10 +1,8 @@
 package repository.Gson;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import model.Developer;
-import model.Skill;
 import model.Specialty;
 import model.Status;
 import repository.DeveloperRepository;
@@ -48,7 +46,7 @@ public class GsonDeveloperRepositoryImpl implements DeveloperRepository {
     @Override
     public Developer update(Developer developer) {
         List<Developer> currentDeveloper = getAllDeveloperInternal();
-        currentDeveloper.set(Math.toIntExact(developer.getId()) - 1, developer);
+        currentDeveloper.set(Math.toIntExact(developer.getId()), developer);
         writeDeveloperToFile(currentDeveloper);
         return developer;
     }
@@ -62,7 +60,7 @@ public class GsonDeveloperRepositoryImpl implements DeveloperRepository {
 
     private Long generateMaxId(List<Developer> developers) {
         Developer developerWithMaxId = developers.stream().max(Comparator.comparing(Developer::getId)).orElse(null);
-        return Objects.nonNull(developerWithMaxId) ? developerWithMaxId.getId() + 1 : 1L;
+        return Objects.nonNull(developerWithMaxId) ? developerWithMaxId.getId() + 1 : 0L;
     }
 
     private void writeDeveloperToFile(List<Developer> developers) {
@@ -102,28 +100,19 @@ public class GsonDeveloperRepositoryImpl implements DeveloperRepository {
         Specialty specialty = gs.getById(spec);
 
         List<Developer> developerList = getAllDeveloperInternal();
-        developerList.get(Math.toIntExact(idDeveloper) - 1).setSpecialty(specialty);
-        writeDeveloperToFile(developerList);
-    }
-
-    public void addSkillDeveloper(Long idDeveloper) {
-        GsonSkillRepositoryImpl gs = new GsonSkillRepositoryImpl();
-        List<Skill> skills = gs.getAll();
-
-        List<Developer> developerList = getAllDeveloperInternal();
-        developerList.get(Math.toIntExact(idDeveloper) - 1).setSkills(skills);
+        developerList.get(Math.toIntExact(idDeveloper)).setSpecialty(specialty);
         writeDeveloperToFile(developerList);
     }
 
     public void deleteByStatus(Long idDeveloper) {
         List<Developer> developerList = getAllDeveloperInternal();
-        developerList.get(Math.toIntExact(idDeveloper) - 1).setStatus(Status.DELETED);
+        developerList.get(Math.toIntExact(idDeveloper)).setStatus(Status.DELETED);
         writeDeveloperToFile(developerList);
     }
 
     public void deleteSpecialtyByDeveloper(Long idDeveloper) {
         List<Developer> developerList = getAllDeveloperInternal();
-        developerList.get(Math.toIntExact(idDeveloper) - 1).setSpecialty(new Specialty());
+        developerList.get(Math.toIntExact(idDeveloper)).setSpecialty(new Specialty());
         writeDeveloperToFile(developerList);
     }
 }

@@ -38,7 +38,7 @@ public class GsonSkillRepositoryImpl implements SkillsRepository {
     @Override
     public Skill update(Skill skill) {
         List<Skill> currentSkills = getAllSkillsInternal();
-        currentSkills.set(Math.toIntExact(skill.getId()) - 1, skill);
+        currentSkills.set(Math.toIntExact(skill.getId()), skill);
         writeSkillsToFile(currentSkills);
         return skill;
     }
@@ -52,7 +52,7 @@ public class GsonSkillRepositoryImpl implements SkillsRepository {
 
     private Long generateMaxId(List<Skill> skills) {
         Skill skillWithMaxId = skills.stream().max(Comparator.comparing(Skill::getId)).orElse(null);
-        return Objects.nonNull(skillWithMaxId) ? skillWithMaxId.getId() + 1 : 1L;
+        return Objects.nonNull(skillWithMaxId) ? skillWithMaxId.getId() + 1 : 0L;
     }
 
     private void writeSkillsToFile(List<Skill> skills) {
@@ -61,7 +61,7 @@ public class GsonSkillRepositoryImpl implements SkillsRepository {
             Files.write(Paths.get(SKILL_PATH), jsonString.getBytes());
 
         } catch (IOException e) {
-            System.out.println(e);
+            System.out.println("Error" + e);
         }
     }
 
