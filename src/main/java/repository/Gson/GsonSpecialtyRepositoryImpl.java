@@ -83,10 +83,5 @@ public class GsonSpecialtyRepositoryImpl implements SpecialtyRepository {
         return new ArrayList<>();
     }
 
-    public Specialty addSpecialty(String name) {
-        Specialty specialty = new Specialty();
-        specialty.setName(name);
-        return specialty;
-    }
 }
 
