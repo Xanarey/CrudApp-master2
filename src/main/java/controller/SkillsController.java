@@ -2,38 +2,31 @@ package controller;
 
 import model.Skill;
 import repository.Gson.GsonSkillRepositoryImpl;
-
+import repository.SkillsRepository;
 import java.util.List;
 
-public class SkillsController extends GsonSkillRepositoryImpl {
+public class SkillsController{
 
-    @Override
+    private final SkillsRepository repo = new GsonSkillRepositoryImpl();
+
     public Skill getById(Long aLong) {
-        return super.getById(aLong);
+        return repo.getById(aLong);
     }
 
-    @Override
     public List<Skill> getAll() {
-        return super.getAll();
+        return repo.getAll();
     }
 
-    @Override
     public Skill save(Skill skill) {
-        return super.save(skill);
+        return repo.save(skill);
     }
 
-    @Override
     public Skill update(Skill skill) {
-        addSkill(skill);
-        return super.update(skill);
+        return repo.update(skill);
     }
 
-    @Override
     public void deleteById(Long aLong) {
-        super.deleteById(aLong);
+        repo.deleteById(aLong);
     }
 
-    private Skill addSkill(Skill skill) {
-        return new Skill(skill.getName());
-    }
 }

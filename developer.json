@@ -1,1 +1,31 @@
-[{"id":1,"firstName":"Timur","lastName":"Brek","status":"ACTIVE","specialty":{},"skills":[]},{"id":2,"firstName":"Mamoa","lastName":"Jason","status":"ACTIVE","specialty":{},"skills":[]}]
+[
+  {
+    "id": 1,
+    "firstName": "Tim",
+    "lastName": "Brek",
+    "status": "ACTIVE",
+    "specialty": {},
+    "skills": [
+      {
+        "id": 1,
+        "name": "backend"
+      },
+      {
+        "id": 2,
+        "name": "frontend"
+      },
+      {
+        "id": 3,
+        "name": "fullstack"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "firstName": "Mamoa",
+    "lastName": "Jason",
+    "status": "ACTIVE",
+    "specialty": {},
+    "skills": []
+  }
+]

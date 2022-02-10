@@ -1,46 +1,48 @@
 package controller;
 
 import model.Developer;
+import model.Skill;
+import repository.DeveloperRepository;
 import repository.Gson.GsonDeveloperRepositoryImpl;
 
+import java.util.Comparator;
 import java.util.List;
 
-public class DeveloperController extends GsonDeveloperRepositoryImpl {
 
-    @Override
-    public Developer getById(Long aLong) {
-        return super.getById(aLong);
+public class DeveloperController implements Comparator<Skill>{
+
+    private final DeveloperRepository repo = new GsonDeveloperRepositoryImpl();
+
+    public Developer getById(Long id) {
+        return repo.getById(id);
     }
 
-    @Override
     public List<Developer> getAll() {
-        return super.getAll();
+        return repo.getAll();
     }
 
-    @Override
     public Developer save(Developer developer) {
-        return super.save(addDeveloper(developer));
+        return repo.save(developer);
     }
 
-    @Override
     public Developer update(Developer developer) {
-        return super.update(editDeveloper(developer));
+        developer.setSkills(sortSkills(developer.getSkills()));
+        return repo.update(developer);
+    }
+
+    public void deleteById(Long id) {
+        repo.deleteById(id);
+    }
+
+    private List<Skill> sortSkills(List<Skill> skills) {
+        Comparator<Skill> skillsComparator = new DeveloperController();
+        skills.sort(skillsComparator);
+        return skills;
     }
 
     @Override
-    public void deleteById(Long aLong) {
-        super.deleteById(aLong);
-    }
-
-    private Developer addDeveloper(Developer developer) {
-        return new Developer(developer.getFirstName(), developer.getLastName());
-    }
-
-    private Developer editDeveloper(Developer developer) {
-        Developer developerTarget = getById(developer.getId());
-        developerTarget.setFirstName(developer.getFirstName());
-        developerTarget.setLastName(developer.getLastName());
-        return developerTarget;
+    public int compare(Skill o1, Skill o2) {
+        return (int) (o1.getId() - o2.getId());
     }
 
 }

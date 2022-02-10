@@ -26,10 +26,8 @@ public class Skill {
         return name;
     }
 
-    public Skill setName(String name) {
-        Skill skill = new Skill();
+    public void setName(String name) {
         this.name = name;
-        return skill;
     }
 
     @Override

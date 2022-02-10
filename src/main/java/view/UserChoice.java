@@ -5,11 +5,10 @@ import controller.SkillsController;
 import controller.SpecialtyController;
 import model.Developer;
 import model.Skill;
+import model.Specialty;
 import model.Status;
-import repository.Gson.GsonDeveloperRepositoryImpl;
 
-import java.util.Objects;
-import java.util.Scanner;
+import java.util.*;
 
 public class UserChoice {
 
@@ -57,14 +56,14 @@ public class UserChoice {
                     CHOICE_SUB_MENU = scanner.nextLong();
 
                     if (CHOICE_SUB_MENU == 2) {
-                        developerController.getAll();
+                        System.out.println(developerController.getAll());
                     }
                     if (CHOICE_SUB_MENU == 3) {
-                        developerController.getAll();
+                        System.out.println(developerController.getAll());
                         System.out.println("Введите id для редактирования: ");
                         do {
-                            ID_SPEC = scanner.nextLong();
-                        } while (ID_SPEC == 0);
+                            ID = scanner.nextLong();
+                        } while (ID == 0);
                         try {
                             System.out.println("Введите имя:");
                             do {
@@ -74,9 +73,11 @@ public class UserChoice {
                             do {
                                 LAST_NAME = scanner.nextLine();
                             } while (Objects.equals(LAST_NAME, ""));
-                            Developer developer = new Developer(FIRST_NAME, LAST_NAME);
-                            developer.setId(ID_SPEC);
+                            Developer developer = developerController.getById(ID);
+                            developer.setFirstName(FIRST_NAME);
+                            developer.setLastName(LAST_NAME);
                             developerController.update(developer);
+                            System.out.println("Успешное редактирование");
                         } catch (NullPointerException e) {
                             System.out.println("Разработчика по указанному ID не существует" + e);
                         }
@@ -103,7 +104,9 @@ public class UserChoice {
                         do {
                             NAME_SPEC = scanner.nextLine();
                         } while (Objects.equals(NAME_SPEC, ""));
-                        specialtyController.addSpecialty(NAME_SPEC);
+                        Specialty specialty = new Specialty();
+                        specialty.setName(NAME_SPEC);
+                        specialtyController.save(specialty);
                         System.out.println("Специальность : " + NAME_SPEC + " успешно добавлена");
                     }
                     if (CHOICE_SUB_MENU == 7) {
@@ -113,14 +116,14 @@ public class UserChoice {
                             try {
                                 ID_SPEC = scanner.nextLong();
                                 System.out.println("Специальность : " + specialtyController.getById(ID_SPEC) + " успешно удалена");
-//                                specialtyController.deleteSpecialtyOnList(ID_SPEC);
+                                specialtyController.deleteById(ID_SPEC);
                             } catch (NullPointerException e) {
                                 System.out.println("Специальности по такому id не существует");
                             }
                         } while (ID_SPEC != 0);
                     }
                     if (CHOICE_SUB_MENU == 8) {
-                        developerController.getAll();
+                        System.out.println(developerController.getAll());
                         System.out.println("Введите id разработчика для добавления специальности: ");
                         do {
                             try {
@@ -128,7 +131,10 @@ public class UserChoice {
                                 System.out.println(specialtyController.getAll());
                                 System.out.println("Введите id специальности: ");
                                 ID_SPEC = scanner.nextLong();
-//                                developerController.addSpecialtyForDeveloper(ID, ID_SPEC);
+                                Specialty specialty = specialtyController.getById(ID_SPEC);
+                                Developer developer = developerController.getById(ID);
+                                developer.setSpecialty(specialty);
+                                developerController.update(developer);
                                 System.out.println("Специальность установлена");
                                 break;
                             } catch (NullPointerException e) {
@@ -145,7 +151,10 @@ public class UserChoice {
                                 System.out.println(specialtyController.getAll());
                                 System.out.println("Введите id новой специальности: ");
                                 ID_SPEC = scanner.nextLong();
-//                                developerController.editSpecialDev(ID, ID_SPEC);
+                                Developer developer = developerController.getById(ID);
+                                Specialty specialty = specialtyController.getById(ID_SPEC);
+                                developer.setSpecialty(specialty);
+                                developerController.update(developer);
                                 System.out.println("Специальность успешно изменена ");
                                 break;
                             } catch (NullPointerException e) {
@@ -154,13 +163,14 @@ public class UserChoice {
                         } while (ID != 0);
                     }
                     if (CHOICE_SUB_MENU == 10) {
-                        developerController.getAll();
+                        System.out.println(developerController.getAll());
                         System.out.println("Введите id разработчика для удаления специальности: ");
                         do {
                             try {
                                 ID = scanner.nextLong();
-                                System.out.println(specialtyController.getAll());
-//                                developerController.deleteSpecialtyDev(ID);
+                                Developer developer = developerController.getById(ID);
+                                developer.setSpecialty(new Specialty());
+                                developerController.update(developer);
                                 System.out.println("Специальность успешно удалена ");
                                 break;
                             } catch (NullPointerException e) {
@@ -177,7 +187,9 @@ public class UserChoice {
                         do {
                             SKILL_NAME = scanner.nextLine();
                         } while (Objects.equals(SKILL_NAME, ""));
-//                        skillsController.addSkillList(SKILL_NAME);
+                        Skill skill = new Skill();
+                        skill.setName(SKILL_NAME);
+                        skillsController.save(skill);
                         System.out.println("Скилл: " + SKILL_NAME + " успешно добавлен");
                     }
                     if (CHOICE_SUB_MENU == 13) {
@@ -185,43 +197,57 @@ public class UserChoice {
                         System.out.println("Введите id скилла для удаления");
                         do {
                             ID = scanner.nextLong();
-//                            skillsController.deleteSkill(ID);
+                            skillsController.deleteById(ID);
                             break;
                         } while (ID != 0);
                         System.out.println("Скилл успешно удалён");
                     }
                     if (CHOICE_SUB_MENU == 14) {
-//                        skillsController.deleteAllSkills();
-                        System.out.println("Все скиллы удалены");
-                    }
-                    if (CHOICE_SUB_MENU == 15) {
-                        developerController.getAll();
+                        System.out.println(developerController.getAll());
                         System.out.println("Введите id разработчика: ");
                         do {
-                                ID = scanner.nextLong();
-                                System.out.println("Выберите название скилла");
-                                System.out.println(skillsController.getAll());
-                                ID_SKILL = scanner.nextLine();
-                                skillsController.update(new Skill(ID_SKILL));
-                                break;
+                            ID = scanner.nextLong();
+                            System.out.println("Выберите скилл");
+                            System.out.println(skillsController.getAll());
+                            ID_SKILLS = scanner.nextLong();
+                            Skill skill = skillsController.getById(ID_SKILLS);
+                            Developer developer = developerController.getById(ID);
+                            developer.getSkills().add(skill);
+                            developerController.update(developer);
+                            System.out.println("Скилл успешно добавлен");
+                            break;
                         } while (ID != 0);
                     }
-                    if (CHOICE_SUB_MENU == 16) {
-                        developerController.getAll();
+                    if (CHOICE_SUB_MENU == 15) {
+                        System.out.println(developerController.getAll());
                         System.out.println("Введите id разработчика для удаления скилла: ");
                         do {
                             try {
                                 ID = scanner.nextLong();
-//                                System.out.println(skillsController.getAllSkillDeveloper(ID));
+                                Developer developer = developerController.getById(ID);
                                 System.out.println("Введите id скилла для удаления: ");
-                                id_skill = scanner.nextInt();
-//                                skillsController.deleteSkillDeveloper(ID, id_skill);
+                                ID_SKILLS = scanner.nextLong();
+                                developer.getSkills().remove(ID_SKILLS);
+                                developerController.update(developer);
                                 System.out.println("Скилл удален");
                                 break;
                             } catch (NullPointerException e) {
                                 System.out.println("Разработчика по указанному ID не существует" + e);
                             }
                         } while (ID != 0);
+                    }
+                    if (CHOICE_SUB_MENU == 16) {
+                        System.out.println(skillsController.getAll());
+                        System.out.println("Введите id скилла для редактирования: ");
+                        do {
+                            ID_SKILLS = scanner.nextLong();
+                            Skill skill = skillsController.getById(ID_SKILLS);
+                            System.out.println("Введите новое названия скилла: ");
+                            SKILL_NAME = scanner.nextLine();
+                            skill.setName(SKILL_NAME);
+                            skillsController.update(skill);
+                        } while (ID_SKILLS != 0);
+                        System.out.println("Изменение успешно внесены");
                     }
                 } while (CHOICE_SUB_MENU != 1);
             }
@@ -246,10 +272,9 @@ public class UserChoice {
             11. Вывести список доступных скиллов
             12. Добавить новый скилл в список
             13. Удалить скилл из списка
-            14. Удалить все скиллы из списка
-            
-            15. Добавить скилл разработчику
-            16. Удалить скилл у разработчика
+            14. Добавить скилл разработчику
+            15. Удалить скилл у разработчика
+            16. Изменить скилл в списке
             """;
 
     public static String MENU = """
@@ -264,12 +289,12 @@ public class UserChoice {
 
     public static Long ID ;
     public static Long ID_SPEC;
-    public static Integer id_skill;
     public static Long CHOICE_MENU;
     public static Long CHOICE_SUB_MENU;
-    public static String ID_SKILL;
+    public static Long ID_SKILLS;
     public static String FIRST_NAME;
     public static String LAST_NAME;
     public static String NAME_SPEC;
     public static String SKILL_NAME;
+
 }
