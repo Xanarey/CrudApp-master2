@@ -3,7 +3,7 @@ package controller;
 import model.Developer;
 import model.Skill;
 import repository.DeveloperRepository;
-import repository.Gson.GsonDeveloperRepositoryImpl;
+import repository.gson.GsonDeveloperRepositoryImpl;
 
 import java.util.Comparator;
 import java.util.List;

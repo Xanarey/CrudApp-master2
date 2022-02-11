@@ -1,7 +1,7 @@
 package controller;
 
 import model.Specialty;
-import repository.Gson.GsonSpecialtyRepositoryImpl;
+import repository.gson.GsonSpecialtyRepositoryImpl;
 import repository.SpecialtyRepository;
 
 import java.util.List;

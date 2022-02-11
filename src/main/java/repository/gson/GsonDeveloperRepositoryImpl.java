@@ -1,10 +1,11 @@
-package repository.Gson;
+package repository.gson;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import model.Developer;
 import repository.DeveloperRepository;
 
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
@@ -19,6 +20,7 @@ import java.util.Objects;
 public class GsonDeveloperRepositoryImpl implements DeveloperRepository {
 
     private static final String DEVELOPER_PATH = "developer.json";
+    private static final Gson GSON = new Gson();
 
     @Override
     public Developer getById(Long aLong) {
@@ -72,15 +74,15 @@ public class GsonDeveloperRepositoryImpl implements DeveloperRepository {
     }
 
     private List<Developer> getAllDeveloperInternal() {
-
         try (Reader reader = new FileReader(DEVELOPER_PATH)) {
+
             Type targetClassType = new TypeToken<ArrayList<Developer>>() { }.getType();
 
-            return new Gson().fromJson(reader, targetClassType);
+            return GSON.fromJson(reader, targetClassType);
 
-        } catch (IOException e) {
-            System.out.println("Error: " + e);
-        }
+            } catch (IOException e) {
+                System.out.println("Error: " + e);
+            }
 
         return new ArrayList<>();
     }

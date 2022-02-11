@@ -7,6 +7,7 @@ import model.Developer;
 import model.Skill;
 import model.Specialty;
 import model.Status;
+import repository.gson.GsonDeveloperRepositoryImpl;
 
 import java.util.*;
 
