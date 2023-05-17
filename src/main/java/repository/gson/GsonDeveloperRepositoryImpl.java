@@ -5,7 +5,6 @@ import com.google.gson.reflect.TypeToken;
 import model.Developer;
 import repository.DeveloperRepository;
 
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
@@ -34,12 +33,11 @@ public class GsonDeveloperRepositoryImpl implements DeveloperRepository {
     }
 
     @Override
-    public Developer save(Developer developer) {
+    public void save(Developer developer) {
         List<Developer> currentDeveloper = getAllDeveloperInternal();
         developer.setId(generateMaxId(currentDeveloper));
         currentDeveloper.add(developer);
         writeDeveloperToFile(currentDeveloper);
-        return developer;
     }
 
     @Override
@@ -54,7 +52,7 @@ public class GsonDeveloperRepositoryImpl implements DeveloperRepository {
     public void deleteById(Long aLong) {
         List<Developer> currentDeveloper = getAllDeveloperInternal();
         Developer developer = getById(aLong);
-        currentDeveloper.remove(currentDeveloper.indexOf(getById(developer.getId())));
+        currentDeveloper.remove(getById(developer.getId()));
         writeDeveloperToFile(currentDeveloper);
     }
 

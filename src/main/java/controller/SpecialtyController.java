@@ -18,8 +18,8 @@ public class SpecialtyController {
         return repo.getAll();
     }
 
-    public Specialty save(Specialty specialty) {
-        return repo.save(specialty);
+    public void save(Specialty specialty) {
+        repo.save(specialty);
     }
 
     public Specialty update(Specialty specialty) {

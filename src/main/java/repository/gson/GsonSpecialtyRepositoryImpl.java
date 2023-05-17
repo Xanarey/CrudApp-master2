@@ -33,12 +33,11 @@ public class GsonSpecialtyRepositoryImpl implements SpecialtyRepository {
     }
 
     @Override
-    public Specialty save(Specialty specialty) {
+    public void save(Specialty specialty) {
         List<Specialty> currentSpecialty = getAllSpecialtyInternal();
         specialty.setId(generateMaxId(currentSpecialty));
         currentSpecialty.add(specialty);
         writeSpecialtyToFile(currentSpecialty);
-        return specialty;
     }
 
     @Override

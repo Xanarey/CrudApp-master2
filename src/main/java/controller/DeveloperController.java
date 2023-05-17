@@ -13,21 +13,19 @@ public class DeveloperController implements Comparator<Skill>{
 
     private final DeveloperRepository repo = new GsonDeveloperRepositoryImpl();
 
-    public Developer getById(Long id) {
-        return repo.getById(id);
-    }
+    public Developer getById(Long id) { return repo.getById(id); }
 
     public List<Developer> getAll() {
         return repo.getAll();
     }
 
-    public Developer save(Developer developer) {
-        return repo.save(developer);
+    public void save(Developer developer) {
+        repo.save(developer);
     }
 
-    public Developer update(Developer developer) {
+    public void update(Developer developer) {
         developer.setSkills(sortSkills(developer.getSkills()));
-        return repo.update(developer);
+        repo.update(developer);
     }
 
     public void deleteById(Long id) {

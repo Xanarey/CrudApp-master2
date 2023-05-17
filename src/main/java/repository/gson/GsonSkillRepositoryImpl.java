@@ -27,12 +27,11 @@ public class GsonSkillRepositoryImpl implements SkillsRepository {
     }
 
     @Override
-    public Skill save(Skill skill) {
+    public void save(Skill skill) {
         List<Skill> currentSkills = getAllSkillsInternal();
         skill.setId(generateMaxId(currentSkills));
         currentSkills.add(skill);
         writeSkillsToFile(currentSkills);
-        return skill;
     }
 
     @Override

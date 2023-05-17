@@ -17,12 +17,12 @@ public class SkillsController{
         return repo.getAll();
     }
 
-    public Skill save(Skill skill) {
-        return repo.save(skill);
+    public void save(Skill skill) {
+        repo.save(skill);
     }
 
-    public Skill update(Skill skill) {
-        return repo.update(skill);
+    public void update(Skill skill) {
+        repo.update(skill);
     }
 
     public void deleteById(Long aLong) {
